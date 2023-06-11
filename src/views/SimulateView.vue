@@ -43,7 +43,7 @@
           <th class="p-2">Championship Predictions</th>
           <th>%</th>
         </tr>
-        <tr v-for="teamStats in scoreboard">
+        <tr v-for="teamStats in (scoreboardBeforeFinal.length ? scoreboardBeforeFinal : scoreboard)">
           <td style="text-align: left!important;">{{teamStats.team.name}}</td>
           <td>{{teamStats.prediction}}</td>
         </tr>
@@ -76,6 +76,7 @@
 
   const week = ref(1)
   const scoreboard = ref([])
+  const scoreboardBeforeFinal = ref([])
   const leagueStore = useLeagueStore()
 
   const getScoreboard = () => {
@@ -93,6 +94,9 @@
       })
           .then((response) => response.json())
           .then((data) => {
+            if (week.value === 6)
+              scoreboardBeforeFinal.value = scoreboard.value
+
             scoreboard.value = data
             week.value++
           })
