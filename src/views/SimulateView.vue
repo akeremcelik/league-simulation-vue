@@ -30,7 +30,8 @@
     <div class="w-1/4 p-2">
       <h3 class="p-2 text-white bg-gray-700">Week {{week}}</h3>
       <ul>
-        <li class="p-2 border-b border-gray-700"
+        <li class="border-b border-gray-300"
+            style="padding: 15px;"
             v-for="fixture in leagueStore.grouppedFixtures[week]">
           {{fixture.home_team.name}} - {{fixture.away_team.name}}
         </li>
@@ -60,7 +61,7 @@
   const leagueStore = useLeagueStore()
 
   const getScoreboard = () => {
-    return fetch(`${import.meta.env.VITE_API_URL}/leagues/${leagueStore.id}/get-scoreboard`)
+    return fetch(`${import.meta.env.VITE_API_URL}/leagues/${leagueStore.id}/scoreboard`)
         .then((response) => response.json())
         .then((data) => {
           scoreboard.value = data
@@ -71,10 +72,10 @@
     fetch(`${import.meta.env.VITE_API_URL}/leagues/${leagueStore.id}/play-next-week`, {
       method: 'POST'
     })
-        .then(() => {
-          getScoreboard().then(() => {
-            week.value++
-          })
+        .then((response) => response.json())
+        .then((data) => {
+          scoreboard.value = data
+          week.value++
         })
   }
 
@@ -82,10 +83,10 @@
     fetch(`${import.meta.env.VITE_API_URL}/leagues/${leagueStore.id}/play-all-weeks`, {
       method: 'POST'
     })
-        .then(() => {
-          getScoreboard().then(() => {
-            week.value = ''
-          })
+        .then((response) => response.json())
+        .then((data) => {
+          scoreboard.value = data
+          week.value = ''
         })
   }
 
@@ -96,6 +97,6 @@
   td {
     text-align: center;
     padding: 15px;
-    border-bottom: 1px solid #f2c2c2;
+    border-bottom: 1px solid rgb(209, 213, 219);
   }
 </style>

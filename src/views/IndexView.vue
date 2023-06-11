@@ -5,7 +5,7 @@
       <div class="p-2 font-bold text-white bg-gray-700">Team Name</div>
       <div>
         <ul>
-          <li class="p-2 border-b border-gray-700"
+          <li class="p-2 border-b border-gray-300"
               v-for="team in teams">
             {{ team.name }}
           </li>
