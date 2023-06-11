@@ -16,11 +16,10 @@
       </div>
 
       <div class="p-2">
-        <button type="button"
-                class="mt-3 text-white bg-blue-700 p-2 rounded-lg"
-                @click="startSimulation">
-          Start Simulation
-        </button>
+        <Button text="Start Simulation"
+                textColor="white"
+                backgroundColor="blue-700"
+                @click="startSimulation" />
       </div>
     </div>
   </div>
@@ -29,6 +28,7 @@
 <script setup>
   import {useLeagueStore} from "../stores/league";
   import router from "../router";
+  import Button from "../components/Button.vue"
 
   const leagueStore = useLeagueStore()
 

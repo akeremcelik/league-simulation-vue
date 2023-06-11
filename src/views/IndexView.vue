@@ -11,11 +11,10 @@
           </li>
         </ul>
       </div>
-      <button type="button"
-              class="mt-3 text-white bg-blue-700 p-2 rounded-lg"
-              @click="genereateFixtures">
-        Generate Fixtures
-      </button>
+      <Button text="Generate Fixtures"
+              textColor="white"
+              backgroundColor="blue-700"
+              @click="genereateFixtures" />
     </div>
   </div>
 </template>
@@ -24,6 +23,7 @@
   import {nextTick, ref} from "vue";
   import {useLeagueStore} from "../stores/league";
   import router from "../router";
+  import Button from "../components/Button.vue"
 
   const teams = ref([])
   const leagueStore = useLeagueStore()

@@ -79,28 +79,23 @@
     </div>
   </div>
   <div class="flex justify-evenly mt-3 mb-3">
-    <button type="button"
-            class="mt-3 text-white bg-blue-700 p-2 rounded-lg"
-            @click="playAllWeeks">
-      Play All Weeks
-    </button>
-    <button type="button"
-            class="mt-3 text-white bg-blue-700 p-2 rounded-lg"
-            @click="playNextWeek">
-      Play Next Week
-    </button>
-    <button type="button"
-            class="mt-3 bg-gray-700 text-white p-2 rounded-lg"
-            :class="{'bg-green-700': week === {...leagueStore}.maxWeek+1}"
+    <Button text="Play All Weeks"
+            textColor="white"
+            backgroundColor="blue-700"
+            @click="playAllWeeks" />
+    <Button text="Play Next Week"
+            textColor="white"
+            backgroundColor="blue-700"
+            @click="playNextWeek" />
+    <Button text="Show All Results"
+            textColor="white"
+            :backgroundColor="week === {...leagueStore}.maxWeek+1 ? 'green-700' : 'gray-700'"
             :disabled="week !== {...leagueStore}.maxWeek+1"
-            @click="showAllResults = !showAllResults">
-      Show All Results
-    </button>
-    <button type="button"
-            class="mt-3 text-white bg-red-400 p-2 rounded-lg"
-            @click="resetData">
-      Reset Data
-    </button>
+            @click="showAllResults = !showAllResults" />
+    <Button text="Reset Data"
+            textColor="white"
+            backgroundColor="red-400"
+            @click="resetData" />
   </div>
 </template>
 
@@ -108,6 +103,7 @@
   import {ref} from "vue";
   import {useLeagueStore} from "../stores/league";
   import router from "../router";
+  import Button from "../components/Button.vue"
 
   const week = ref(1)
   const scoreboard = ref([])
