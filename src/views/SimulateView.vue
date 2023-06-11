@@ -37,6 +37,18 @@
         </li>
       </ul>
     </div>
+    <div class="w-1/4 p-2">
+      <table class="w-full">
+        <tr class="text-white bg-gray-700">
+          <th class="p-2">Championship Predictions</th>
+          <th>%</th>
+        </tr>
+        <tr v-for="teamStats in scoreboard">
+          <td style="text-align: left!important;">{{teamStats.team.name}}</td>
+          <td>{{teamStats.prediction}}</td>
+        </tr>
+      </table>
+    </div>
   </div>
   <div class="flex justify-evenly">
     <button type="button"
