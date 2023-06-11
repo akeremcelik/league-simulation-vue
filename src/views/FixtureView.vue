@@ -4,7 +4,7 @@
       <div class="text-2xl mb-2 mt-5">Generated Fixtures</div>
       <div class="flex flex-wrap">
         <div class="w-1/4 p-2"
-             v-for="(fixtures, week) in grouppedFixtures">
+             v-for="(fixtures, week) in leagueStore.grouppedFixtures">
             <h3 class="p-3 text-white bg-black">Week {{week}}</h3>
             <ul>
               <li class="p-2 border-b border-gray-700"
@@ -28,12 +28,11 @@
 
 <script setup>
   import {useLeagueStore} from "../stores/league";
-  import {ref} from "vue";
   import _ from 'lodash';
   import router from "../router";
 
   const leagueStore = useLeagueStore()
-  const grouppedFixtures = ref(_.groupBy(leagueStore.fixtures, 'week'))
+  leagueStore.setGrouppedFixtures(_.groupBy(leagueStore.fixtures, 'week'))
 
   const startSimulation = () => {
     router.push({path: '/simulate'})
