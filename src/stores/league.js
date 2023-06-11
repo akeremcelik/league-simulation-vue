@@ -2,7 +2,7 @@ import { ref } from 'vue'
 import { defineStore } from 'pinia'
 
 export const useLeagueStore = defineStore('league', () => {
-    const id = ref()
+    const id = ref(null)
     const fixtures = ref([])
     const grouppedFixtures = ref([])
 
@@ -18,5 +18,11 @@ export const useLeagueStore = defineStore('league', () => {
         grouppedFixtures.value = incomingGrouppedFixtures
     }
 
-    return { id, fixtures, grouppedFixtures, setId, setFixtures, setGrouppedFixtures }
+    function resetData () {
+        id.value = null
+        fixtures.value = []
+        grouppedFixtures.value = []
+    }
+
+    return { id, fixtures, grouppedFixtures, setId, setFixtures, setGrouppedFixtures, resetData }
 })

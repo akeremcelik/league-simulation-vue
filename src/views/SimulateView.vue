@@ -49,12 +49,18 @@
             @click="playNextWeek">
       Play Next Week
     </button>
+    <button type="button"
+            class="mt-3 text-white bg-red-400 p-2 rounded-lg"
+            @click="resetData">
+      Reset Data
+    </button>
   </div>
 </template>
 
 <script setup>
   import {ref} from "vue";
   import {useLeagueStore} from "../stores/league";
+  import router from "../router";
 
   const week = ref(1)
   const scoreboard = ref([])
@@ -88,6 +94,11 @@
           scoreboard.value = data
           week.value = ''
         })
+  }
+
+  const resetData = () => {
+    leagueStore.resetData()
+    router.push({path: '/'})
   }
 
   getScoreboard()
