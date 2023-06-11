@@ -35,7 +35,7 @@
             <li class="border-b border-gray-300"
                 style="padding: 15px;"
                 v-for="fixture in leagueStore.grouppedFixtures[week-1]">
-              {{fixture.home_team.name}} {{fixture.home_team_score}} - {{fixture.away_team_score}} {{fixture.away_team.name}}
+              {{fixture.home_team.name}} <span class="font-bold">{{fixture.home_team_score}} - {{fixture.away_team_score}}</span> {{fixture.away_team.name}}
             </li>
           </ul>
         </div>
