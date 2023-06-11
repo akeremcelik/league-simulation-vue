@@ -31,36 +31,15 @@
       <div class="flex flex-col">
         <div v-if="showAllResults">
           <div v-for="week in leagueStore.maxWeek">
-            <h3 class="p-2 text-white bg-gray-700">Week {{week}}</h3>
-            <ul>
-              <li class="border-b border-gray-300"
-                  style="padding: 15px;"
-                  v-for="fixture in leagueStore.grouppedFixtures[week]">
-                {{fixture.home_team.name}} <span class="font-bold">{{fixture.home_team_score}} - {{fixture.away_team_score}}</span> {{fixture.away_team.name}}
-              </li>
-            </ul>
+            <WeeklyFixture :week="week" :fixtures="leagueStore.grouppedFixtures[week]" />
           </div>
         </div>
         <div v-else>
           <div v-if="week-1 > 0">
-            <h3 class="p-2 text-white bg-gray-700">Week {{week-1}}</h3>
-            <ul>
-              <li class="border-b border-gray-300"
-                  style="padding: 15px;"
-                  v-for="fixture in leagueStore.grouppedFixtures[week-1]">
-                {{fixture.home_team.name}} <span class="font-bold">{{fixture.home_team_score}} - {{fixture.away_team_score}}</span> {{fixture.away_team.name}}
-              </li>
-            </ul>
+            <WeeklyFixture :week="week-1" :fixtures="leagueStore.grouppedFixtures[week-1]" />
           </div>
           <div v-if="week <= leagueStore.maxWeek">
-            <h3 class="p-2 text-white bg-gray-700">Week {{week}}</h3>
-            <ul>
-              <li class="border-b border-gray-300"
-                  style="padding: 15px;"
-                  v-for="fixture in leagueStore.grouppedFixtures[week]">
-                {{fixture.home_team.name}} - {{fixture.away_team.name}}
-              </li>
-            </ul>
+            <WeeklyFixture :week="week" :fixtures="leagueStore.grouppedFixtures[week]" />
           </div>
         </div>
       </div>
@@ -104,6 +83,7 @@
   import {useLeagueStore} from "../stores/league";
   import router from "../router";
   import Button from "../components/Button.vue"
+  import WeeklyFixture from "../components/WeeklyFixture.vue"
 
   const week = ref(1)
   const scoreboard = ref([])

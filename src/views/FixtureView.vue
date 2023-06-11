@@ -5,13 +5,7 @@
       <div class="flex flex-wrap">
         <div class="w-1/4 p-2"
              v-for="(fixtures, week) in leagueStore.grouppedFixtures">
-            <h3 class="p-3 text-white bg-gray-700">Week {{week}}</h3>
-            <ul>
-              <li class="p-2 border-b border-gray-300"
-                  v-for="fixture in fixtures">
-                {{fixture.home_team.name}} - {{fixture.away_team.name}}
-              </li>
-            </ul>
+            <WeeklyFixture :week="week" :fixtures="fixtures" />
         </div>
       </div>
 
@@ -29,6 +23,7 @@
   import {useLeagueStore} from "../stores/league";
   import router from "../router";
   import Button from "../components/Button.vue"
+  import WeeklyFixture from "../components/WeeklyFixture.vue"
 
   const leagueStore = useLeagueStore()
 
