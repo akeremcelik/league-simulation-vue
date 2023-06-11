@@ -28,11 +28,9 @@
 
 <script setup>
   import {useLeagueStore} from "../stores/league";
-  import _ from 'lodash';
   import router from "../router";
 
   const leagueStore = useLeagueStore()
-  leagueStore.setGrouppedFixtures(_.groupBy(leagueStore.fixtures, 'week'))
 
   const startSimulation = () => {
     router.push({path: '/simulate'})
