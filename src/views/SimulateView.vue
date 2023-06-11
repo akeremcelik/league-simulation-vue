@@ -87,25 +87,29 @@
   }
 
   const playNextWeek = () => {
-    fetch(`${import.meta.env.VITE_API_URL}/leagues/${leagueStore.id}/play-next-week`, {
-      method: 'POST'
-    })
-        .then((response) => response.json())
-        .then((data) => {
-          scoreboard.value = data
-          week.value++
-        })
+    if (week.value <= 6) {
+      fetch(`${import.meta.env.VITE_API_URL}/leagues/${leagueStore.id}/play-next-week`, {
+        method: 'POST'
+      })
+          .then((response) => response.json())
+          .then((data) => {
+            scoreboard.value = data
+            week.value++
+          })
+    }
   }
 
   const playAllWeeks = () => {
-    fetch(`${import.meta.env.VITE_API_URL}/leagues/${leagueStore.id}/play-all-weeks`, {
-      method: 'POST'
-    })
-        .then((response) => response.json())
-        .then((data) => {
-          scoreboard.value = data
-          week.value = ''
-        })
+    if (week.value <= 6) {
+      fetch(`${import.meta.env.VITE_API_URL}/leagues/${leagueStore.id}/play-all-weeks`, {
+        method: 'POST'
+      })
+          .then((response) => response.json())
+          .then((data) => {
+            scoreboard.value = data
+            week.value = 7
+          })
+    }
   }
 
   const resetData = () => {
