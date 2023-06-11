@@ -29,25 +29,39 @@
     </div>
     <div class="w-1/4 p-2">
       <div class="flex flex-col">
-        <div v-if="week-1 > 0">
-          <h3 class="p-2 text-white bg-gray-700">Week {{week-1}}</h3>
-          <ul>
-            <li class="border-b border-gray-300"
-                style="padding: 15px;"
-                v-for="fixture in leagueStore.grouppedFixtures[week-1]">
-              {{fixture.home_team.name}} <span class="font-bold">{{fixture.home_team_score}} - {{fixture.away_team_score}}</span> {{fixture.away_team.name}}
-            </li>
-          </ul>
+        <div v-if="showAllResults">
+          <div v-for="week in leagueStore.maxWeek">
+            <h3 class="p-2 text-white bg-gray-700">Week {{week}}</h3>
+            <ul>
+              <li class="border-b border-gray-300"
+                  style="padding: 15px;"
+                  v-for="fixture in leagueStore.grouppedFixtures[week]">
+                {{fixture.home_team.name}} <span class="font-bold">{{fixture.home_team_score}} - {{fixture.away_team_score}}</span> {{fixture.away_team.name}}
+              </li>
+            </ul>
+          </div>
         </div>
-        <div v-if="week <= leagueStore.maxWeek">
-          <h3 class="p-2 text-white bg-gray-700">Week {{week}}</h3>
-          <ul>
-            <li class="border-b border-gray-300"
-                style="padding: 15px;"
-                v-for="fixture in leagueStore.grouppedFixtures[week]">
-              {{fixture.home_team.name}} - {{fixture.away_team.name}}
-            </li>
-          </ul>
+        <div v-else>
+          <div v-if="week-1 > 0">
+            <h3 class="p-2 text-white bg-gray-700">Week {{week-1}}</h3>
+            <ul>
+              <li class="border-b border-gray-300"
+                  style="padding: 15px;"
+                  v-for="fixture in leagueStore.grouppedFixtures[week-1]">
+                {{fixture.home_team.name}} <span class="font-bold">{{fixture.home_team_score}} - {{fixture.away_team_score}}</span> {{fixture.away_team.name}}
+              </li>
+            </ul>
+          </div>
+          <div v-if="week <= leagueStore.maxWeek">
+            <h3 class="p-2 text-white bg-gray-700">Week {{week}}</h3>
+            <ul>
+              <li class="border-b border-gray-300"
+                  style="padding: 15px;"
+                  v-for="fixture in leagueStore.grouppedFixtures[week]">
+                {{fixture.home_team.name}} - {{fixture.away_team.name}}
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
@@ -64,7 +78,7 @@
       </table>
     </div>
   </div>
-  <div class="flex justify-evenly mt-3">
+  <div class="flex justify-evenly mt-3 mb-3">
     <button type="button"
             class="mt-3 text-white bg-blue-700 p-2 rounded-lg"
             @click="playAllWeeks">
@@ -74,6 +88,13 @@
             class="mt-3 text-white bg-blue-700 p-2 rounded-lg"
             @click="playNextWeek">
       Play Next Week
+    </button>
+    <button type="button"
+            class="mt-3 bg-gray-700 text-white p-2 rounded-lg"
+            :class="{'bg-green-700': week === {...leagueStore}.maxWeek+1}"
+            :disabled="week !== {...leagueStore}.maxWeek+1"
+            @click="showAllResults = !showAllResults">
+      Show All Results
     </button>
     <button type="button"
             class="mt-3 text-white bg-red-400 p-2 rounded-lg"
@@ -91,6 +112,7 @@
   const week = ref(1)
   const scoreboard = ref([])
   const scoreboardBeforeFinal = ref([])
+  const showAllResults = ref(false)
   const leagueStore = useLeagueStore()
 
   const getScoreboard = () => {
