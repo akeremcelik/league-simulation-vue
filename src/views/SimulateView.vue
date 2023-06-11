@@ -28,14 +28,28 @@
       </table>
     </div>
     <div class="w-1/4 p-2">
-      <h3 class="p-2 text-white bg-gray-700">Week {{week}}</h3>
-      <ul>
-        <li class="border-b border-gray-300"
-            style="padding: 15px;"
-            v-for="fixture in leagueStore.grouppedFixtures[week]">
-          {{fixture.home_team.name}} - {{fixture.away_team.name}}
-        </li>
-      </ul>
+      <div class="flex flex-col">
+        <div v-if="week-1 > 0">
+          <h3 class="p-2 text-white bg-gray-700">Week {{week-1}}</h3>
+          <ul>
+            <li class="border-b border-gray-300"
+                style="padding: 15px;"
+                v-for="fixture in leagueStore.grouppedFixtures[week-1]">
+              {{fixture.home_team.name}} {{fixture.home_team_score}} - {{fixture.away_team_score}} {{fixture.away_team.name}}
+            </li>
+          </ul>
+        </div>
+        <div v-if="week <= leagueStore.maxWeek">
+          <h3 class="p-2 text-white bg-gray-700">Week {{week}}</h3>
+          <ul>
+            <li class="border-b border-gray-300"
+                style="padding: 15px;"
+                v-for="fixture in leagueStore.grouppedFixtures[week]">
+              {{fixture.home_team.name}} - {{fixture.away_team.name}}
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
     <div class="w-1/4 p-2">
       <table class="w-full">
@@ -50,7 +64,7 @@
       </table>
     </div>
   </div>
-  <div class="flex justify-evenly">
+  <div class="flex justify-evenly mt-3">
     <button type="button"
             class="mt-3 text-white bg-blue-700 p-2 rounded-lg"
             @click="playAllWeeks">
@@ -97,7 +111,12 @@
             if (week.value === leagueStore.maxWeek)
               scoreboardBeforeFinal.value = scoreboard.value
 
-            scoreboard.value = data
+            data['previous_week_fixtures'].map((updatedFixture) => {
+              const fixtureIndex = leagueStore.fixtures.findIndex((fixture) => fixture.id === updatedFixture.id)
+              leagueStore.fixtures[fixtureIndex] = {...leagueStore.fixtures[fixtureIndex], home_team_score: updatedFixture.home_team_score, away_team_score: updatedFixture.away_team_score}
+            })
+
+            scoreboard.value = data['data']
             week.value++
           })
     }
@@ -110,8 +129,13 @@
       })
           .then((response) => response.json())
           .then((data) => {
-            scoreboard.value = data
-            week.value = 7
+            data['previous_week_fixtures'].map((updatedFixture) => {
+              const fixtureIndex = leagueStore.fixtures.findIndex((fixture) => fixture.id === updatedFixture.id)
+              leagueStore.fixtures[fixtureIndex] = {...leagueStore.fixtures[fixtureIndex], home_team_score: updatedFixture.home_team_score, away_team_score: updatedFixture.away_team_score}
+            })
+
+            scoreboard.value = data['data']
+            week.value = {...leagueStore}.maxWeek+1
           })
     }
   }
