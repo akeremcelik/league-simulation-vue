@@ -88,13 +88,13 @@
   }
 
   const playNextWeek = () => {
-    if (week.value <= 6) {
+    if (week.value <= leagueStore.maxWeek) {
       fetch(`${import.meta.env.VITE_API_URL}/leagues/${leagueStore.id}/play-next-week`, {
         method: 'POST'
       })
           .then((response) => response.json())
           .then((data) => {
-            if (week.value === 6)
+            if (week.value === leagueStore.maxWeek)
               scoreboardBeforeFinal.value = scoreboard.value
 
             scoreboard.value = data
@@ -104,7 +104,7 @@
   }
 
   const playAllWeeks = () => {
-    if (week.value <= 6) {
+    if (week.value <= leagueStore.maxWeek) {
       fetch(`${import.meta.env.VITE_API_URL}/leagues/${leagueStore.id}/play-all-weeks`, {
         method: 'POST'
       })

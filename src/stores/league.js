@@ -5,6 +5,7 @@ import _ from "lodash";
 export const useLeagueStore = defineStore('league', () => {
     const id = ref(null)
     const fixtures = ref([])
+    const maxWeek = ref(6)
 
     const grouppedFixtures = computed(() => _.groupBy(fixtures.value, 'week'))
 
@@ -21,5 +22,5 @@ export const useLeagueStore = defineStore('league', () => {
         fixtures.value = []
     }
 
-    return { id, fixtures, grouppedFixtures, setId, setFixtures, resetData }
+    return { id, fixtures, maxWeek, grouppedFixtures, setId, setFixtures, resetData }
 })
